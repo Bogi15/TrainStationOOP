@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{661c8ad7-8bda-46d3-a1d7-16bd83a178a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DiscountCards">
+      <UniqueIdentifier>{1874a97c-2d32-4ca1-8b90-679672b33f7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseVagon.h">
@@ -30,11 +36,20 @@
     <ClInclude Include="Train.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Day.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="String.h">
+      <Filter>Source Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="Hour.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="DiscountCard.h">
+      <Filter>DiscountCards</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscountCardAge.h">
+      <Filter>DiscountCards</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscountCardRoute.h">
+      <Filter>DiscountCards</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscountCardDistance.h">
+      <Filter>DiscountCards</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,11 +71,20 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Day.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="String.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
-    <ClCompile Include="Hour.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="DiscountCard.cpp">
+      <Filter>DiscountCards</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscountCardAge.cpp">
+      <Filter>DiscountCards</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscountCardRoute.cpp">
+      <Filter>DiscountCards</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscountCardDistance.cpp">
+      <Filter>DiscountCards</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

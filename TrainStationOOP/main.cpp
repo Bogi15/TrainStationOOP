@@ -8,7 +8,10 @@ int main() {
 	SecondClassVagon b(20, 10);
 	SleepingVagon c(20,15);
 	a.printUnoccupiedSeats();
+	std::cout << a.getVagonID() << std::endl;
 	b.printUnoccupiedSeats();
+	std::cout << b.getVagonID() << std::endl;
 	c.printUnoccupiedSeats();
+	std::cout << c.getVagonID() << std::endl;
 
 }

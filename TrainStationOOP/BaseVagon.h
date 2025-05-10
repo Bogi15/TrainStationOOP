@@ -5,8 +5,10 @@ private:
 	bool** seats;
 	size_t seatRows;
 	size_t seatCols;
-	static unsigned int ID;
+	unsigned int ID;
 	unsigned int basePrice;
+
+	static unsigned int nextID;
 
 	void free();
 	void copyFrom(const BaseVagon& other);
@@ -28,5 +30,6 @@ public:
 	unsigned int getBasePrice() const;
 	bool getIsTaken(size_t row, size_t col) const;
 	virtual void printUnoccupiedSeats() const = 0;
+	unsigned int getVagonID()const;
 };
 

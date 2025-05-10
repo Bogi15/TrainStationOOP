@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <utility>
 
-unsigned int BaseVagon::ID = 1;
+unsigned int BaseVagon::nextID = 1;
 
 void BaseVagon::free()
 {
@@ -59,6 +59,7 @@ BaseVagon::BaseVagon(unsigned int basePrice, size_t rows, size_t cols)
 	this->basePrice = basePrice;
 	this->seatRows = rows;
 	this->seatCols = cols;
+	this->ID = nextID++;
 
 	seats = new bool* [this->seatRows];
 	for (size_t i = 0;i < this->seatRows;i++) {
@@ -67,6 +68,7 @@ BaseVagon::BaseVagon(unsigned int basePrice, size_t rows, size_t cols)
 			seats[i][j] = false;
 		}
 	}
+
 }
 
 BaseVagon::BaseVagon(const BaseVagon& other)
@@ -112,5 +114,10 @@ unsigned int BaseVagon::getBasePrice() const
 bool BaseVagon::getIsTaken(size_t row, size_t col) const
 {
 	return seats[row][col];
+}
+
+unsigned int BaseVagon::getVagonID() const
+{
+	return this->ID;
 }
 

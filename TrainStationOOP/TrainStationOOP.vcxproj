@@ -128,21 +128,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BaseVagon.h" />
-    <ClInclude Include="Day.h" />
+    <ClInclude Include="DiscountCard.h" />
+    <ClInclude Include="DiscountCardAge.h" />
+    <ClInclude Include="DiscountCardDistance.h" />
+    <ClInclude Include="DiscountCardRoute.h" />
     <ClInclude Include="FirstClassVagon.h" />
     <ClInclude Include="SecondClassVagon.h" />
     <ClInclude Include="SleepingVagon.h" />
-    <ClInclude Include="Hour.h" />
+    <ClInclude Include="String.h" />
     <ClInclude Include="Train.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseVagon.cpp" />
-    <ClCompile Include="Day.cpp" />
+    <ClCompile Include="DiscountCard.cpp" />
+    <ClCompile Include="DiscountCardAge.cpp" />
+    <ClCompile Include="DiscountCardDistance.cpp" />
+    <ClCompile Include="DiscountCardRoute.cpp" />
     <ClCompile Include="FirstClassVagon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SecondClassVagon.cpp" />
     <ClCompile Include="SleepingVagon.cpp" />
-    <ClCompile Include="Hour.cpp" />
+    <ClCompile Include="String.cpp" />
     <ClCompile Include="Train.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
