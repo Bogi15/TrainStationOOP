@@ -1,7 +1,8 @@
 #pragma once
 #include "DiscountCard.h"
 
-class DiscountCardRoute
+class DiscountCardRoute : public DiscountCard
 {
+
 };
 

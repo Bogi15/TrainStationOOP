@@ -14,4 +14,5 @@ int main() {
 	c.printUnoccupiedSeats();
 	std::cout << c.getVagonID() << std::endl;
 
+
 }

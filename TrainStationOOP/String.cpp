@@ -10,6 +10,23 @@ String::String(const char* data) : size(strlen(data)), capacity(allocateCapacity
 	strcpy(this->data, data);
 }
 
+String::String(unsigned int data)
+{
+	unsigned int len = getLenOfNumber(data);
+	this->size = len;
+	this->capacity = len + 1;
+	this->data = new char[this->capacity];
+	int index = len - 1;
+
+	while (data) {
+		this->data[index] = '0' + data % 10;
+		data /= 10;
+		index--;
+	}
+
+	this->data[len] = '\0';
+}
+
 String::String(size_t newSize) : size(0)
 {
 	this->capacity = allocateCapacity(this->size);
@@ -180,6 +197,17 @@ unsigned int String::getNextPowerOfTwo(unsigned int n) const
 unsigned int String::allocateCapacity(unsigned int size) const
 {
 	return std::max(getNextPowerOfTwo(size + 1), 8u);
+}
+
+unsigned int String::getLenOfNumber(unsigned int data) const
+{
+	unsigned int len = 0;
+	while (data) {
+		data /= 10;
+		len++;
+	}
+
+	return len;
 }
 
 void String::resize(size_t newCapacity)

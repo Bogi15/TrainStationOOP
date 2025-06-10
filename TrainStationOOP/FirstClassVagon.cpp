@@ -9,14 +9,24 @@ namespace tempConstants {
 	constexpr int NUMBER_OF_COLS = 2;
 }
 
-FirstClassVagon::FirstClassVagon(unsigned int basePrice, double confortFactor) : BaseVagon(basePrice,tempConstants::NUMBER_OF_ROWS, tempConstants::NUMBER_OF_COLS)
+FirstClassVagon::FirstClassVagon(unsigned int basePrice, double comfortFactor) : BaseVagon(basePrice,tempConstants::NUMBER_OF_ROWS, tempConstants::NUMBER_OF_COLS)
 {
-	this->confortFactor = confortFactor;
+	this->comfortFactor = comfortFactor;
 }
 
 unsigned int FirstClassVagon::getPriceForSeat() const
 {
-	return this->getBasePrice() * this->confortFactor + (foodIncluded) ? tempConstants::PRICE_TO_INCLUDE_FOOD : 0;
+	return this->getBasePrice() * this->comfortFactor + (foodIncluded) ? tempConstants::PRICE_TO_INCLUDE_FOOD : 0;
+}
+
+bool FirstClassVagon::getFoodIncluded() const
+{
+	return this->foodIncluded;
+}
+
+double FirstClassVagon::getComforFactor() const
+{
+	return this->comfortFactor;
 }
 
 void FirstClassVagon::printUnoccupiedSeats() const
@@ -36,4 +46,9 @@ void FirstClassVagon::printUnoccupiedSeats() const
 		std::cout << "|\n";
 	}
 	BaseVagon::printChar(tempConstants::FACTOR_FOR_OUTLINING * tempConstants::NUMBER_OF_COLS - 1);
+}
+
+BaseVagon* FirstClassVagon::clone() const
+{
+	return new FirstClassVagon(getBasePrice(), getComforFactor());
 }

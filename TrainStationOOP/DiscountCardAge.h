@@ -1,6 +1,10 @@
 #pragma once
 #include "DiscountCard.h"
 
+namespace ConstantsDCA {
+	constexpr const char* CARD_TYPE = "AgeCard_";
+}
+
 class DiscountCardAge : public DiscountCard
 {
 private:

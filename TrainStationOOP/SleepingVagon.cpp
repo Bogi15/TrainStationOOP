@@ -13,6 +13,11 @@ SleepingVagon::SleepingVagon(unsigned int basePrice, unsigned int hundredKilomet
 	this->hundredKilometersPrice = hundredKilometersPrice;
 }
 
+unsigned int SleepingVagon::getHundredKilometersPrice() const
+{
+	return this->hundredKilometersPrice;
+}
+
 unsigned int SleepingVagon::getPriceForSeat(unsigned int distantce) const
 {
 	return this->getBasePrice() + (this->hundredKilometersPrice / 100) * distantce;
@@ -31,4 +36,9 @@ void SleepingVagon::printUnoccupiedSeats() const
 		seat++;
 	}
 	BaseVagon::printChar(tempConstants::FACTOR_FOR_OUTLINING);
+}
+
+BaseVagon* SleepingVagon::clone() const
+{
+	return new SleepingVagon(getBasePrice(), getHundredKilometersPrice());
 }

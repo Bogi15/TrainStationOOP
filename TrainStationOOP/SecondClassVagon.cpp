@@ -13,6 +13,11 @@ SecondClassVagon::SecondClassVagon(unsigned int basePrice, unsigned int kgPrice)
     this->kgPrice = kgPrice;
 }
 
+unsigned int SecondClassVagon::getKgPrice() const
+{
+	return this->kgPrice;
+}
+
 unsigned int SecondClassVagon::getPriceForSeat(unsigned int kgBaggage) const
 {
     return this->getBasePrice() + this->kgPrice * kgBaggage;
@@ -34,5 +39,10 @@ void SecondClassVagon::printUnoccupiedSeats() const
 		std::cout << "|\n";
 	}
 	BaseVagon::printChar(tempConstants::FACTOR_FOR_OUTLINING * tempConstants::NUMBER_OF_COLS - 1);
+}
+
+BaseVagon* SecondClassVagon::clone() const
+{
+	return new SecondClassVagon(getBasePrice(), getKgPrice());
 }
 

@@ -9,7 +9,11 @@ private:
 public:
 
 	SleepingVagon(unsigned int basePrice, unsigned int hundredKilometersPrice);
+	unsigned int getHundredKilometersPrice() const;
+
 	unsigned int getPriceForSeat(unsigned int distantce) const;
 	void printUnoccupiedSeats() const override;
+
+	BaseVagon* clone() const override;
 };
 

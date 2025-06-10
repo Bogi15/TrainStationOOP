@@ -19,6 +19,7 @@ private:
 
 	unsigned int getNextPowerOfTwo(unsigned int n) const;
 	unsigned int allocateCapacity(unsigned int size) const;
+	unsigned int getLenOfNumber(unsigned int data) const;
 
 	void resize(size_t newCapacity);
 
@@ -29,6 +30,7 @@ private:
 public:
 	String();
 	String(const char* data);
+	String(unsigned int data);
 
 	String(const String& other);
 	String& operator=(const String& other);

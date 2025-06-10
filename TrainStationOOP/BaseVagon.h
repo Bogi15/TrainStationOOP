@@ -26,6 +26,7 @@ public:
 	BaseVagon& operator=(const BaseVagon& other);
 	BaseVagon& operator=(BaseVagon&& other);
 	virtual ~BaseVagon();
+	virtual BaseVagon* clone() const = 0;
 
 	unsigned int getBasePrice() const;
 	bool getIsTaken(size_t row, size_t col) const;
