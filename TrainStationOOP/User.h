@@ -7,20 +7,25 @@
 
 class User
 {
-private:
-	Vector<Station> stations;
-
-	void printArrivals() const;
-	void printDepartures() const;
-
 public:
+    User() = default;
 
-	void printStations() const;
-	void priintSchedule(String station) const;
-	void printScheduleDestination(String station , String destination) const;
-	//void printScheduleTime(Station, Date, Time) const;
-	void printTrain(Train ID) const;
-	void printWagon(Train ID, unsigned int ZagonID) const;
-	//void buyTicketDiscount(Train ID, unsigned int vagonID, unsigned int seatID, String cardFile);
+	 void printStations(const Vector<Station>& stations) const;
+     void printSchedule(const Station& station) const;
+     void printScheduleToDestination(const Station& station, const String& destination) const;
+     void printScheduleAfterTime(const Station& station, const String& date, const String& time) const;
+     void printTrainInfo(const Train& train) const;
+     void printWagonInfo(const Train& train, int wagonID) const;
+     void buyTicket(Train& train, unsigned int vagonID, size_t seat, const String& ticketFileName,
+        const Vector<String>& extraParams) const;
+     void buyTicket(Train& train, unsigned int vagonID, size_t seat, const String& ticketFileName,
+        const String& discountCardFile ,Vector <String>& extraParams) const;
+
+     virtual bool isAdmin()const;
+     virtual void writeBinary(std::ofstream& ofs) const = 0;
+     virtual void readBinary(std::ifstream& ifs) = 0;
+
+
+     ~User() = default;
 };
 

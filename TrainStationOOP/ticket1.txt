@@ -1,0 +1,10 @@
+|===========Train Ticket===========|
+|Train ID: 2001                    |
+|Vagon ID: 1                       |
+|Seat ID: 9                        |
+|Departure time: 11/06/2025 08:00  |
+|Arrival time: 11/06/2025 12:00    |
+|Departure platform: 1             |
+|Discount: 50 lv.                  |
+|Price: 0 lv.                      |
+|==================================|

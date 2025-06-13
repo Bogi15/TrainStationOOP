@@ -12,11 +12,20 @@ String::String(const char* data) : size(strlen(data)), capacity(allocateCapacity
 
 String::String(unsigned int data)
 {
-	unsigned int len = getLenOfNumber(data);
-	this->size = len;
-	this->capacity = len + 1;
-	this->data = new char[this->capacity];
-	int index = len - 1;
+	if (data == 0) {
+		size = 1;
+		capacity = 2;
+		this->data = new char[capacity];
+		this->data[0] = '0';
+		this->data[1] = '\0';
+		return;
+	}
+
+	size_t len = getLenOfNumber(data);
+	size = len;
+	capacity = len + 1;
+	this->data = new char[capacity];
+	size_t index = len - 1;
 
 	while (data) {
 		this->data[index] = '0' + data % 10;
@@ -27,7 +36,7 @@ String::String(unsigned int data)
 	this->data[len] = '\0';
 }
 
-String::String(size_t newSize) : size(0)
+String::String(size_t newSize) : size(newSize)
 {
 	this->capacity = allocateCapacity(this->size);
 	this->data = new char[this->capacity] { '\0' };
@@ -87,6 +96,7 @@ const char& String::operator[](size_t idx) const
 
 char& String::operator[](size_t idx)
 {
+	if (idx >= size) throw std::out_of_range("Index out of bounds");
 	return this->data[idx];
 }
 
@@ -121,6 +131,33 @@ String String::substr(size_t begin, size_t howMany) const
 	String toReturn(howMany);
 	strncat(toReturn.data, this->data + begin, howMany);
 	return toReturn;
+}
+
+String String::trim() const
+{
+	if (!data || getSize() == 0) {
+		return String("");
+	}
+	size_t start = 0;
+	size_t finish = getSize();
+
+	while (start < finish && data[start] == ' ') {
+		start++;
+	}
+
+	while (start < finish && data[finish - 1] == ' ') {
+		finish--;
+	}
+
+	return substr(start, finish - start);
+}
+
+String String::stripSign() const
+{
+	if (getSize() > 0 && data[0] == '|') {
+		return substr(1, getSize() - 1); 
+	}
+	return *this;
 }
 
 bool operator==(const String& lhs, const String& rhs)
@@ -177,6 +214,30 @@ std::ostream& operator<<(std::ostream& os, const String& other)
 	return os << other.data;
 }
 
+void String::writeBinary(std::ofstream& ofs) const
+{
+	ofs.write((const char*)&this->size, sizeof(size_t));
+	ofs.write(this->data, this->size);
+}
+
+void String::readBinary(std::ifstream& ifs)
+{
+	free();
+
+	size_t newSize = 0;
+	ifs.read((char*)&newSize, sizeof(size_t));
+	unsigned int cap = allocateCapacity(newSize);
+
+	this->capacity = cap;
+	this->data = new char[cap];
+	if (newSize > 0) {
+		ifs.read(this->data, newSize);
+	}
+
+	this->data[newSize] = '\0';
+	this->size = newSize;
+}
+
 String::~String()
 {
 	free();
@@ -208,6 +269,28 @@ unsigned int String::getLenOfNumber(unsigned int data) const
 	}
 
 	return len;
+}
+
+unsigned int String::getNumber() const
+{
+	if (!data || getSize() == 0) {
+		return 0;
+	}
+	unsigned int number = 0;
+	bool foundDigit = false;
+
+	for (size_t i = 0; i < getSize(); ++i) {
+		char ch = data[i];
+		if (ch >= '0' && ch <= '9') {
+			foundDigit = true;
+			number = number * 10 + (ch - '0');
+		}
+		else if (foundDigit) {
+			break;
+		}
+	}
+
+	return number;
 }
 
 void String::resize(size_t newCapacity)

@@ -13,11 +13,12 @@ private:
 	String generateFileName() const;
 
 public:
-
+	DiscountCardAge();
 	DiscountCardAge(String discountCardHolderName, unsigned int discountCardID ,unsigned int age);
 
-	unsigned int getPercentigeDiscount() const;
+	unsigned int getPercentigeDiscount() const override;
 	void saveDiscountCardToFile() const override;
-	void loadDiscountCardFromFile() const override;
+	void loadDiscountCardFromFile(const String& fileName)override;
+	void printDiscountCard() const override;
 };
 

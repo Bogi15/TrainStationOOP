@@ -3,8 +3,8 @@
 #include "Utility.h"
 
 namespace ConstantsDC {
-	constexpr const char* PATH_FOR_DISCOUNT_CARDS = "discountCards/";
-    constexpr const char* DISCOUNT_CARD_FILE_SUFFIX = "_Card.dat";
+	constexpr const char* PATH_FOR_DISCOUNT_CARDS = "discountCards\\";
+    constexpr const char* DISCOUNT_CARD_FILE_SUFFIX = "_Card.txt";
 	constexpr const char* DISCOUNT_CARDS_ID_HOLDER = ".txt";
 }
 
@@ -22,12 +22,14 @@ protected:
 
 public:
 
+	DiscountCard();
 	DiscountCard(String discountCardHolderName, unsigned int discountCardID);
 
 	bool validateCard(unsigned int possibleCardID) const;
 	virtual void saveDiscountCardToFile() const = 0;
-	virtual void loadDiscountCardFromFile() const = 0;
+	virtual void loadDiscountCardFromFile(const String& fileName) = 0;
 	virtual void printDiscountCard() const = 0;
+	virtual unsigned int getPercentigeDiscount() const = 0;
 
 };
 

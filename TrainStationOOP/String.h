@@ -40,6 +40,7 @@ public:
 
 	const char* c_str() const;
 
+
 	size_t getSize() const;
 	size_t getCapacity() const;
 
@@ -50,6 +51,9 @@ public:
 	friend String operator+(const String& lhs, const String& rhs);
 
 	String substr(size_t begin, size_t howMany) const;
+	String trim()const;
+	String stripSign() const;
+	unsigned int getNumber() const;
 
 	friend bool operator==(const String& lhs, const String& rhs);
 	friend bool operator!=(const String& lhs, const String& rhs);
@@ -63,7 +67,8 @@ public:
 	friend std::istream& operator>>(std::istream& is, String& other);
 	friend std::ostream& operator<<(std::ostream& os, const String& other);
 
+	void writeBinary(std::ofstream& ofs) const;
+	void readBinary(std::ifstream& ifs);
+
 	~String();
 };
-
-

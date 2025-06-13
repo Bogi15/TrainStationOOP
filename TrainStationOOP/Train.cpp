@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include "Utility.h"
 
 unsigned int Train::nextID = 1000;
 
@@ -12,27 +13,36 @@ double Train::getTimeNeededForTheTrainToArrive() const
 
 String Train::calculateArrivalTime(const String& departureTime) const
 {
-	size_t travelHours = (size_t)getTimeNeededForTheTrainToArrive();
-	double fractionPart = getTimeNeededForTheTrainToArrive() - travelHours;
-	size_t travelMinutes = (size_t)(std::round(fractionPart * 60));
+	std::time_t dep_t = convertStringToTime(departureTime);
+	double hoursNeeded = getTimeNeededForTheTrainToArrive();
+	std::time_t travelSec = static_cast<std::time_t>(std::llround(hoursNeeded * 3600.0));
 
-	std::time_t travelSecond = (travelHours * 3600) + (travelMinutes * 60);
-	std::time_t arrivalTime = convertStringToTime(departureTime.c_str()) + travelSecond;
+	std::time_t arr_t = dep_t + travelSec;
 
-	return std::ctime(&arrivalTime);
+	std::tm* ptm = std::localtime(&arr_t);
+	if (!ptm) {
+		throw std::runtime_error("localtime failed on arrival timestamp");
+	}
+
+	char buf[20];
+	if (std::strftime(buf, sizeof(buf), "%d/%m/%Y %H:%M", ptm) == 0) {
+		throw std::runtime_error("strftime failed");
+	}
+
+	return String(buf);
 }
 
 time_t Train::convertStringToTime(const String& departureTime) const
 {
-		std::tm tm = {};
-		std::istringstream ss(departureTime.c_str());
-		ss >> std::get_time(&tm, "%d/%m/%Y %H:%M");
-
-		if (ss.fail()) {
-			throw std::runtime_error("Failed to parse time string!");
-		}
-
-		return std::mktime(&tm);
+	std::tm tm{}; 
+	std::istringstream ss(departureTime.c_str());
+	ss >> std::get_time(&tm, "%d/%m/%Y %H:%M");
+	if (ss.fail()) {
+		throw std::runtime_error("Failed to parse time string: " + std::string(departureTime.c_str()));
+	}
+	tm.tm_sec = 0;   
+	tm.tm_isdst = -1;   
+	return std::mktime(&tm);
 }
 
 void Train::free()
@@ -53,7 +63,7 @@ void Train::copyFrom(const Train& other)
 	this->departureTrack = other.departureTrack;
 	this->arrivalTrack = other.arrivalTrack;
 	this->distance = other.distance;
-	this->ID = other.ID;
+	this->ID = other.ID + 1;
 	this->speed = other.speed;
 
 	for (size_t i = 0; i < other.vagons.getSize();i++) {
@@ -83,13 +93,11 @@ void Train::moveFrom(Train&& other) noexcept
 	other.vagons.clear();
 }
 
-Train::Train(const String& startingStarion, const String& finalStation, unsigned int distance, unsigned int speed, const String& departureTime)
-	: startingStation(startingStarion), finalStation(finalStation), distance(distance), speed(speed), departureTime(departureTime)
+Train::Train(const String& startingStarion, const String& finalStation, unsigned int distance, unsigned int speed, const String& departureTime, size_t departureTrack, size_t arrivalTrack)
+	: startingStation(startingStarion), finalStation(finalStation), distance(distance), speed(speed), departureTime(departureTime), departureTrack(departureTrack),arrivalTrack(arrivalTrack)
 {
 	this->ID = nextID++;
 	this->arrivalTime = calculateArrivalTime(departureTime);
-	//trqbva za track funckiq
-
 }
 
 Train::Train(const Train& other)
@@ -122,12 +130,223 @@ Train& Train::operator=(Train&& other) noexcept
 	return *this;
 }
 
+Train::~Train()
+{
+	free();
+}
+
+const String& Train::getStartingStation() const{ return startingStation;}
+
+const String& Train::getFinalStation() const
+{
+	return finalStation;
+}
+
+const String& Train::getDepartureTime() const
+{
+	return departureTime;
+}
+
+const String& Train::getArrivalTime() const
+{
+	return arrivalTime;
+}
+
+size_t Train::getDepartureTrack() const
+{
+	return departureTrack;
+}
+
+size_t Train::getArrivalTrack() const
+{
+	return arrivalTrack;
+}
+
+unsigned int Train::getDistance() const
+{
+	return distance;
+}
+
+unsigned int Train::getID() const
+{
+	return ID;
+}
+
+unsigned int Train::getSpeed() const
+{
+	return speed;
+}
+
+const Vector<BaseVagon*>& Train::getVagons() const
+{
+	return vagons;
+}
+
+unsigned int Train::getNextID()
+{
+	return nextID;
+}
+
+void Train::setStartingStation(const String& station)
+{
+	startingStation = station;
+}
+
+void Train::setFinalStation(const String& station)
+{
+	finalStation = station;
+}
+
+void Train::setDepartureTime(const String& time)
+{
+	departureTime = time;
+}
+
+void Train::setArrivalTime(const String& time)
+{
+	arrivalTime = time;
+}
+
+void Train::setDepartureTrack(size_t track)
+{
+	departureTrack = track;
+}
+
+void Train::setArrivalTrack(size_t track)
+{
+	arrivalTrack = track;
+}
+
+void Train::setDistance(unsigned int dist)
+{
+	distance = dist;
+}
+
+void Train::setID(unsigned int id)
+{
+	ID = id;
+}
+
+void Train::setNextID(unsigned int id)
+{
+	nextID = id;
+}
+
+void Train::setSpeed(unsigned int spd)
+{
+	speed = spd;
+}
+
+void Train::setVagons(const Vector<BaseVagon*>& vs)
+{
+	vagons = vs;
+}
+
+void Train::addVagon(const BaseVagon& vagon)
+{
+	BaseVagon* cloneVagon = vagon.clone();
+	vagons.push_back(cloneVagon);
+}
+
+void Train::removeVagon(unsigned int vagonID)
+{
+	if (vagonID <= vagons.getSize() + 1) {
+		vagons.remove(vagonID);
+		std::cout << "Successfully removed wagon with ID " << vagonID <<std::endl;
+	}
+
+	std::cout << "The provided wagon ID is not valid" << std::endl;
+}
+
+void Train::printTrain() const
+{
+	std::cout << "===Train ID:" << ID << "===" << std::endl;
+	std::cout << "Starting Station: " << startingStation << std::endl;
+	std::cout << "Destination: " << finalStation << std::endl;
+	std::cout << "Distance: " << distance << " km" << std::endl;
+	std::cout << "Speed: " << speed << "km/h" << std::endl;
+	std::cout << "Departure Time: " << departureTime << std::endl;
+	std::cout << "Arrival Time: " << arrivalTime << std::endl;
+	std::cout << "Departure Platform: " << departureTrack << std::endl;
+	std::cout << std::endl;
+	std::cout << "Wagons:" << std::endl;
+	for (size_t i = 0;i < vagons.getSize();i++) {
+		std::cout << i + 1 << " - " << vagons[i]->getTypeWagonString() << std::endl;
+	}
+	std::cout << std::endl;
+}
+
+void Train::printWagon() const
+{
+	
+}
+
 void Train::printVagons() const
 {
 	for (size_t i = 0;i < vagons.getSize();i++) {
-		std::cout << "Vagon ID: " << vagons[i]->getVagonID() << std::endl;
+		std::cout << "Vagon ID: " << vagons[i]->getWagonID() << std::endl;
 		vagons[i]->printUnoccupiedSeats();
 	}
 
 	std::cout << std::endl;
+}
+
+void Train::getSeat(unsigned int vagonID, size_t seat)
+{
+	getVagonByID(vagonID)->buyPlaceOnSeat(seat);
+}
+
+const BaseVagon* Train::getVagonByID(unsigned int vagonID) const
+{
+	return vagons[vagonID - 1];
+}
+
+BaseVagon*& Train::getVagonByID(unsigned int vagonID)
+{
+	return vagons[vagonID - 1];
+}
+
+void Train::writeTrainBinary(std::ofstream& ofs) const
+{
+	startingStation.writeBinary(ofs);
+	finalStation.writeBinary(ofs);
+	departureTime.writeBinary(ofs);
+	arrivalTime.writeBinary(ofs);
+	ofs.write((const char*)&departureTrack, sizeof(size_t));
+	ofs.write((const char*)&arrivalTrack, sizeof(size_t));	
+	ofs.write((const char*)&distance, sizeof(unsigned int));
+	ofs.write((const char*)&ID, sizeof(unsigned int));
+	ofs.write((const char*)&speed, sizeof(unsigned int));
+
+	size_t count = vagons.getSize();
+	ofs.write((const char*)&count, sizeof(size_t));
+
+	for (size_t i = 0;i < vagons.getSize();i++) {
+		VagonType tag = vagons[i]->typeVagon();
+		ofs.write((const char*)&tag, sizeof(VagonType));
+
+		vagons[i]->writeVagonBinary(ofs);
+	}
+}
+
+void Train::readTrainBinary(std::ifstream& ifs)
+{
+	startingStation.readBinary(ifs);
+	finalStation.readBinary(ifs);
+	departureTime.readBinary(ifs);
+	arrivalTime.readBinary(ifs);
+	ifs.read((char*)&departureTrack, sizeof(size_t));
+	ifs.read((char*)&arrivalTrack, sizeof(size_t));
+	ifs.read((char*)&distance, sizeof(unsigned int));
+	ifs.read((char*)&ID, sizeof(unsigned int));
+	ifs.read((char*)&speed, sizeof(unsigned int));
+
+	size_t count = 0;;
+	ifs.read((char*)&count, sizeof(count));
+	vagons.clear();
+	
+	for (size_t i = 0;i < count;i++) {
+		BaseVagon* v = Utility::readFromStream(ifs);
+		vagons.push_back(v);
+	}
 }

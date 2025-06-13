@@ -1,30 +1,53 @@
 #include "User.h"
 
-void User::printStations() const
+void User::printStations(const Vector<Station>& stations) const
 {
-	std::cout << "The program has these stations in the database: " << std::endl;
-	for (size_t i = 0;i < this->stations.getSize();i++) {
-		std::cout << this->stations[i].getStationName() << std::endl;
-	}
-}
-
-void User::priintSchedule(String station) const
-{
-	int index = -1;
-
-	for (size_t i = 0;i < this->stations.getSize();i++) {
-		if (this->stations[i].getStationName() == station) {
-			index = i;
-			break;
-		}
-	}
-
-	if (index == -1) {
-		std::cout << "Error: No such station!" << std::endl;
+	if (stations.getSize() == 0) {
+		std::cout << "No stations!" << std::endl;
 		return;
 	}
 
-	std::cout << std::endl << "=== Schedule for station " << this->stations[index].getStationName() << " ===" << std::endl;
+	std::cout << "Stations:" << std::endl;
 
+	for (size_t i = 0;i < stations.getSize();i++) {
+		std::cout << i + 1 << ". " << stations[i].getStationName() << std::endl;
+	}
+
+	std::cout << std::endl;
+}
+
+void User::printSchedule(const Station& station) const
+{
+	station.printSchedule();
+}
+
+void User::printScheduleToDestination(const Station& station, const String& destination) const
+{
+	station.printTrainsByDestination(destination);
+}
+
+void User::printScheduleAfterTime(const Station& station, const String& date, const String& time) const
+{
+	station.printTrainsByTime(date, time);
+}
+
+void User::printTrainInfo(const Train& train) const
+{
+	train.printTrain();
+}
+
+void User::printWagonInfo(const Train& train, int wagonID) const
+{
+	train.getVagonByID(wagonID)->printWagon();
+}
+
+void User::buyTicket(Train& train, unsigned int vagonID, size_t seat, const String& ticketFileName, const Vector<String>& extraParams) const
+{
 
 }
+
+bool User::isAdmin() const
+{
+	return false;
+}
+

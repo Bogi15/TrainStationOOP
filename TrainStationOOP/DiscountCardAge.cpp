@@ -1,11 +1,13 @@
 #include "DiscountCardAge.h"
-#include <istream>
+#include <fstream>
 
 String DiscountCardAge::generateFileName() const
 {
 	String toReturn = ConstantsDCA::CARD_TYPE + this->discountCardHolderName;
-	return ConstantsDC::PATH_FOR_DISCOUNT_CARDS + toReturn +ConstantsDC::DISCOUNT_CARD_FILE_SUFFIX;
+	return ConstantsDC::PATH_FOR_DISCOUNT_CARDS + toReturn + ConstantsDC::DISCOUNT_CARD_FILE_SUFFIX;
 }
+
+DiscountCardAge::DiscountCardAge() : DiscountCard(), age(0){}
 
 DiscountCardAge::DiscountCardAge(String discountCardHolderName, unsigned int discountCardID, unsigned int age)
 	: DiscountCard(discountCardHolderName,discountCardID), age(age){}
@@ -19,10 +21,10 @@ unsigned int DiscountCardAge::getPercentigeDiscount() const
 
 void DiscountCardAge::saveDiscountCardToFile() const
 {
-	if (validateCard(this->discountCardID)) return;
+	//if (validateCard(this->discountCardID)) return;
 
 	String fileName = generateFileName();
-	std::ofstream ofs(fileName.c_str());
+	std::ofstream ofs(fileName.c_str(), std::ios::out | std::ios::trunc);
 
 	if (!ofs) {
 		std::cout << "Error opening the file" << std::endl;	
@@ -33,27 +35,66 @@ void DiscountCardAge::saveDiscountCardToFile() const
 	String Id(this->discountCardID);
 	String age(this->age);
 	age += " years old";
-	String firstLine("Age card");
+	
 
-	ofs << '|' << myUtility.fillWithSign(myUtility.calculateFilling(line)) << line << myUtility.fillWithSign(myUtility.calculateFilling(line)) << '|' << std::endl;
-	ofs << '|' << this->discountCardHolderName << myUtility.fillWithSpaces(myUtility.calculateFilling(this->discountCardHolderName)) << '|' << std::endl;
-	ofs << '|' << age << myUtility.fillWithSpaces(myUtility.calculateFilling(age)) << '|' << std::endl;
-	ofs << '|' << Id << myUtility.fillWithSpaces(myUtility.calculateFilling(Id)) << '|' << std::endl;
-	ofs << '|' << myUtility.fillWithSign(ConstantsU::MAX_LINE_LEN) << '|' << std::endl;
+	ofs << '|' << myUtility.fillWithSign(myUtility.calculateFilling(line)) << line << myUtility.fillWithSign(myUtility.calculateFilling(line)) << "|\n";
+	ofs << '|' << this->discountCardHolderName << myUtility.fillWithSpaces(myUtility.calculateFilling(this->discountCardHolderName.c_str())) << "|\n";
+	ofs << '|' << age << myUtility.fillWithSpaces(myUtility.calculateFilling(age)) << "|\n";
+	ofs << '|' << Id << myUtility.fillWithSpaces(myUtility.calculateFilling(Id)) << "|\n";
+	ofs << '|' << myUtility.fillWithSign(ConstantsU::MAX_LINE_LEN) << myUtility.fillWithSign(ConstantsU::MAX_LINE_LEN) << "|\n";
 	
 	ofs.close();
 }
 
-void DiscountCardAge::loadDiscountCardFromFile() const
+void DiscountCardAge::loadDiscountCardFromFile(const String& fileName)
 {
-	String fileName = generateFileName();
-	std::ifstream ifs(fileName.c_str(), std::ios::binary);
+	std::ifstream ifs(fileName.c_str());
 
 	if (!ifs) {
-		std::cout << "Error opening the file" << std::endl;
+		std::cout << "Error opening the file: " << fileName << std::endl;
 		return;
 	}
 
-	size_t sizeOfDiscountCardHolderName;
-	
+	String trash;
+	ifs >> trash;
+	ifs >> trash;
+
+	String name;
+	ifs >> name;
+	ifs >> trash;
+
+	name = name.stripSign();
+	//name.trim();
+	this->discountCardHolderName = name;
+
+	String age;
+	ifs >> age;
+	this->age = age.getNumber();
+
+	ifs >> trash;
+	ifs >> trash;
+	ifs >> trash;
+
+	String id;
+	ifs >> id;
+	this->discountCardID = id.getNumber();
+
+
+	ifs >> trash;
+	ifs >> trash;
+}
+
+void DiscountCardAge::printDiscountCard() const
+{
+	String line("Age card");
+	String Id(this->discountCardID);
+	String age(this->age);
+	age += " years old";
+
+
+	std::cout << '|' << myUtility.fillWithSign(myUtility.calculateFilling(line)) << line << myUtility.fillWithSign(myUtility.calculateFilling(line)) << "|\n";
+	std::cout << '|' << this->discountCardHolderName << myUtility.fillWithSpaces(myUtility.calculateFilling(this->discountCardHolderName.c_str())) << "|\n";
+	std::cout << '|' << age << myUtility.fillWithSpaces(myUtility.calculateFilling(age)) << "|\n";
+	std::cout << '|' << Id << myUtility.fillWithSpaces(myUtility.calculateFilling(Id)) << "|\n";
+	std::cout << '|' << myUtility.fillWithSign(ConstantsU::MAX_LINE_LEN) << myUtility.fillWithSign(ConstantsU::MAX_LINE_LEN) << "|\n";
 }

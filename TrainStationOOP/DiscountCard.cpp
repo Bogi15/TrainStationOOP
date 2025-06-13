@@ -1,5 +1,6 @@
 #include "DiscountCard.h"
 #include <fstream>
+#include <sstream>
 
 String DiscountCard::generateFileName() const
 {
@@ -8,12 +9,21 @@ String DiscountCard::generateFileName() const
 
 String DiscountCard::genereateStringID() const
 {
-	
+	return "dummy";
 	
 }
 
-DiscountCard::DiscountCard(String discountCardHolderName, unsigned int discountCardID) : discountCardHolderName(discountCardHolderName), discountCardID(discountCardID)
+DiscountCard::DiscountCard()
 {
+	discountCardHolderName = "";
+	discountCardID = 0;
+	numberOfCardsCreated = 0;
+}
+
+DiscountCard::DiscountCard(String discountCardHolderName, unsigned int discountCardID)
+	: discountCardHolderName(discountCardHolderName), discountCardID(discountCardID)
+{
+	numberOfCardsCreated = 0;
 }
 
 bool DiscountCard::validateCard(unsigned int possibleCardID) const

@@ -9,12 +9,17 @@ protected:
 	String password;
 
 public:
+	bool isAdmin()const override;
 
 	void addTrain(const String& startingStation, const String& finalStation, unsigned int distance, unsigned int speed, const String& departureTime);
-	//add-train <station> <destination> <distance> <speed> <departureDate> departureTime> 
-	//remove-train <trainID>
-	//add-wagon <trainID> <wagonType> <basePrice> [extra params] 
-	//remove-wagon <trainID> <wagonID>
-	//move-wagon 
+	void removeTrain(unsigned int trainID);
+	void addWagon(unsigned int trainID, VagonType& wagonType, unsigned int basePrice, Vector <String>& extraParams);
+	void removeWagon(unsigned int trainID, unsigned int wagonID);
+
+	void writeBinary(std::ofstream& ofs) const override;
+	void readBinary(std::ifstream& ifs) override;
+
+	const String& getName()const;
+	bool validatePassword(const String& p)const;
 };
 
