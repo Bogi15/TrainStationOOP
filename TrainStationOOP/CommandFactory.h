@@ -19,6 +19,7 @@
 #include "createDiscountCardCommand.h"
 #include "validateDiscountCardCommand.h"
 #include "addWagonCommand.h"
+#include "moveWagonCommand.h"
 
 
 Command* createCommand(const String& command, systemManager* s);

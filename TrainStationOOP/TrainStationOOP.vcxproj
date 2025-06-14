@@ -147,6 +147,7 @@
     <ClInclude Include="FirstClassVagon.h" />
     <ClInclude Include="loginCommand.h" />
     <ClInclude Include="logoutCommand.h" />
+    <ClInclude Include="moveWagonCommand.h" />
     <ClInclude Include="OrdinaryUser.h" />
     <ClInclude Include="printSchedule.h" />
     <ClInclude Include="printScheduleDestinationCommand.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="loginCommand.cpp" />
     <ClCompile Include="logoutCommand.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="moveWagonCommand.cpp" />
     <ClCompile Include="OrdinaryUser.cpp" />
     <ClCompile Include="printSchedule.cpp" />
     <ClCompile Include="printScheduleDestinationCommand.cpp" />

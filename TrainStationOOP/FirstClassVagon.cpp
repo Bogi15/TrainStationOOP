@@ -120,6 +120,17 @@ bool FirstClassVagon::isFree(size_t seat) const
 	return true;
 }
 
+bool FirstClassVagon::wagonIsFree() const
+{
+	for (size_t i = 0;i < tempConstants::NUMBER_OF_ROWS;i++) {
+		for (size_t j = 0;j < tempConstants::NUMBER_OF_COLS;j++) {
+			if (getIsTaken(i, j)) return false;
+		}
+	}
+
+	return true;
+}
+
 String FirstClassVagon::getTypeWagonString() const
 {
 	return "First Class";

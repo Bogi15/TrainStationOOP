@@ -34,5 +34,7 @@ Command* createCommand(const String& command, systemManager* manager) {
 		return new buyTicketCommand(manager);
 	else if (command == "buy-ticket-discount")
 		return new buyTicketDIscountCommand(manager);
+	else if (command == "move-wagon")
+		return new moveWagonCommand(manager);
 	throw std::exception("Non existing command!");
 }

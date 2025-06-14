@@ -24,6 +24,8 @@ public:
 	void readVagonBinary(std::ifstream& ifs) override;
 
 	bool isFree(size_t seat)const override;
+	bool wagonIsFree()const override;
+
 
 	String getTypeWagonString() const override;
 	void printWagon() const override;

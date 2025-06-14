@@ -20,6 +20,7 @@ public:
 	void setSeats(const bool** seats) override;
 
 	bool isFree(size_t seat)const override;
+	bool wagonIsFree()const override;
 
 	VagonType typeVagon() const override;
 	void writeVagonBinary(std::ofstream& ofs) const override;

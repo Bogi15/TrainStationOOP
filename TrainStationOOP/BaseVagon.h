@@ -45,6 +45,7 @@ public:
 
 	bool getIsTaken(size_t row, size_t col) const;
 	virtual bool isFree(size_t seat)const = 0;
+	virtual bool wagonIsFree()const = 0;
 	void setIsTaken(size_t row, size_t col, bool state);
 	virtual void printUnoccupiedSeats() const = 0;
 	virtual void printWagon() const = 0;

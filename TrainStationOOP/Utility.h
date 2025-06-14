@@ -38,6 +38,8 @@ public:
 	static bool isValidHour(const String& time);
 	static bool isTimeToFree(const String& t);
 
+	static bool hasDeparted(const String& t);
+
 	static DiscountCard* createDiscountCard(const String& type);
 	static DiscountCard* createDiscountCardFromFirstChar(const String& type);
 

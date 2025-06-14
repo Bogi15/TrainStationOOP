@@ -204,6 +204,16 @@ bool Utility::isTimeToFree(const String& t)
     return now >= (given + THIRTY_MINUTES);
 }
 
+bool Utility::hasDeparted(const String& t)
+{
+    std::tm tm = Utility::parseDateTime(t);
+
+    std::time_t event_t = Utility::toTimeT(tm);
+
+    return std::time(nullptr) >= event_t;
+    
+}
+
 DiscountCard* Utility::createDiscountCard(const String& type)
 {
     if (type == "route-card")
