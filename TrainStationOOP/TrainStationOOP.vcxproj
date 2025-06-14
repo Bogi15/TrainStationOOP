@@ -129,12 +129,16 @@
   <ItemGroup>
     <ClInclude Include="addStationCommand.h" />
     <ClInclude Include="addTrainCommand.h" />
+    <ClInclude Include="addWagonCommand.h" />
     <ClInclude Include="Admin.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="BaseVagon.h" />
+    <ClInclude Include="buyTicketCommand.h" />
+    <ClInclude Include="buyTicketDIscountCommand.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandExecutor.h" />
     <ClInclude Include="CommandFactory.h" />
+    <ClInclude Include="createDiscountCardCommand.h" />
     <ClInclude Include="DiscountCard.h" />
     <ClInclude Include="DiscountCardAge.h" />
     <ClInclude Include="DiscountCardDistance.h" />
@@ -150,6 +154,7 @@
     <ClInclude Include="printStationsCommand.h" />
     <ClInclude Include="printTrainCommand.h" />
     <ClInclude Include="printTrainWagonCommand.h" />
+    <ClInclude Include="removeTrainCommand.h" />
     <ClInclude Include="SecondClassVagon.h" />
     <ClInclude Include="SleepingVagon.h" />
     <ClInclude Include="Shared_Weak_Ptr.hpp" />
@@ -163,17 +168,22 @@
     <ClInclude Include="User.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="VagonType.h" />
+    <ClInclude Include="validateDiscountCardCommand.h" />
     <ClInclude Include="Vector.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="addStationCommand.cpp" />
     <ClCompile Include="addTrainCommand.cpp" />
+    <ClCompile Include="addWagonCommand.cpp" />
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="BaseVagon.cpp" />
+    <ClCompile Include="buyTicketCommand.cpp" />
+    <ClCompile Include="buyTicketDIscountCommand.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandExecutor.cpp" />
     <ClCompile Include="CommandFactory.cpp" />
+    <ClCompile Include="createDiscountCardCommand.cpp" />
     <ClCompile Include="DiscountCard.cpp" />
     <ClCompile Include="DiscountCardAge.cpp" />
     <ClCompile Include="DiscountCardDistance.cpp" />
@@ -190,6 +200,7 @@
     <ClCompile Include="printStationsCommand.cpp" />
     <ClCompile Include="printTrainCommand.cpp" />
     <ClCompile Include="printTrainWagonCommand.cpp" />
+    <ClCompile Include="removeTrainCommand.cpp" />
     <ClCompile Include="SecondClassVagon.cpp" />
     <ClCompile Include="SleepingVagon.cpp" />
     <ClCompile Include="Station.cpp" />
@@ -202,6 +213,7 @@
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="VagonType.cpp" />
+    <ClCompile Include="validateDiscountCardCommand.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

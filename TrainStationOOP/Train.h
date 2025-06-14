@@ -28,6 +28,7 @@ protected:
 	unsigned int distance = 0;
 	unsigned int ID = 0;
 	unsigned int speed = 0;
+	unsigned int nextVagonID = 0;
 	Vector <BaseVagon*> vagons = {};
 
 	static unsigned int nextID;
@@ -52,6 +53,7 @@ public:
 	unsigned int getID() const;
 	unsigned int getSpeed() const;
 	const Vector<BaseVagon*>& getVagons() const;
+	Vector<BaseVagon*>& getVagons();
 	static unsigned int getNextID();
 
 	void setStartingStation(const String& station);
@@ -66,7 +68,7 @@ public:
 	void setSpeed(unsigned int spd);
 	void setVagons(const Vector<BaseVagon*>& vs);
 
-	void addVagon(const BaseVagon& vagon);
+	void addVagon(BaseVagon*& vagon);
 	void removeVagon(unsigned int vagonID);
 
 	void printTrain()const;

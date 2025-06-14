@@ -1,7 +1,7 @@
 |===========Train Ticket===========|
 |Train ID: 1000                    |
 |Vagon ID: 1                       |
-|Seat ID: 1                        |
+|Seat ID: 3                        |
 |Departure time: 14/06/2025 18:00  |
 |Arrival time: 14/06/2025 22:00    |
 |Departure platform: 0             |

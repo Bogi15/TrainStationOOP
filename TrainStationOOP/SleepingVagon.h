@@ -19,6 +19,7 @@ public:
 	void buyPlaceOnSeat(size_t seat) override;
 	void setSeats(const bool** seats) override;
 
+	bool isFree(size_t seat)const override;
 
 	VagonType typeVagon() const override;
 	void writeVagonBinary(std::ofstream& ofs) const override;

@@ -93,15 +93,31 @@ VagonType FirstClassVagon::typeVagon() const
 void FirstClassVagon::writeVagonBinary(std::ofstream& ofs) const
 {
 	BaseVagon::writeVagonBinary(ofs);
-	ofs.write((const char*)&foodIncluded, sizeof(bool));
 	ofs.write((const char*)&comfortFactor, sizeof(double));
 }
 
 void FirstClassVagon::readVagonBinary(std::ifstream& ifs)
 {
 	BaseVagon::readVagonBinary(ifs);
-	ifs.read((char*)&foodIncluded, sizeof(bool));
 	ifs.read((char*)&comfortFactor, sizeof(double));
+}
+
+bool FirstClassVagon::isFree(size_t seat) const
+{
+	if (seat == 0 || seat > tempConstants::NUMBER_OF_COLS * tempConstants::NUMBER_OF_ROWS) {
+		throw std::out_of_range("Invalid seat number");
+	}
+
+	seat--;
+
+	size_t row = seat / tempConstants::NUMBER_OF_COLS;
+	size_t col = seat % tempConstants::NUMBER_OF_COLS;
+
+	if (BaseVagon::getIsTaken(row, col)) {
+		throw std::runtime_error("The seat is taken");
+	}
+
+	return true;
 }
 
 String FirstClassVagon::getTypeWagonString() const

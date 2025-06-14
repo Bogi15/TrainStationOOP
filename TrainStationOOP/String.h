@@ -70,5 +70,7 @@ public:
 	void writeBinary(std::ofstream& ofs) const;
 	void readBinary(std::ifstream& ifs);
 
+	bool findSubStr(const String& s)const;
+
 	~String();
 };

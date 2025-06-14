@@ -47,6 +47,9 @@ public:
 	void addDepartingTrain(const SharedPtr<Train>& train);
 	void addArrivingTrain(const SharedPtr<Train>& train);
 
+	void removeDepartingTrain(unsigned int trainID);
+	void removeArrivingTrain(unsigned int trainID);
+
 	const bool* getTracks()const;
 	bool* getTracks();
 	size_t getNumberOfTracks()const;

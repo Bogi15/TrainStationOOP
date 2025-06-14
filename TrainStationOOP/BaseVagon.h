@@ -13,7 +13,7 @@ private:
 	unsigned int basePrice;
 	
 
-	static unsigned int nextID;
+	//static unsigned int nextID;
 
 	void free();
 	void copyFrom(const BaseVagon& other);
@@ -44,11 +44,13 @@ public:
 	void setNextID(unsigned int lastWagonID);
 
 	bool getIsTaken(size_t row, size_t col) const;
+	virtual bool isFree(size_t seat)const = 0;
 	void setIsTaken(size_t row, size_t col, bool state);
 	virtual void printUnoccupiedSeats() const = 0;
 	virtual void printWagon() const = 0;
 
 	virtual VagonType typeVagon() const = 0;
+
 	virtual void writeVagonBinary(std::ofstream& ofs) const;
 	virtual void readVagonBinary(std::ifstream& ifs);
 	

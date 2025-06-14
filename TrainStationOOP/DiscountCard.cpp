@@ -2,49 +2,40 @@
 #include <fstream>
 #include <sstream>
 
+unsigned int DiscountCard::nextCardID = 100000;
+
 String DiscountCard::generateFileName() const
 {
-	return ConstantsDC::DISCOUNT_CARDS_ID_HOLDER;
-}
-
-String DiscountCard::genereateStringID() const
-{
-	return "dummy";
-	
+	return ConstantsDC::DISCOUNT_CARD_FILE_SUFFIX;
 }
 
 DiscountCard::DiscountCard()
 {
 	discountCardHolderName = "";
 	discountCardID = 0;
-	numberOfCardsCreated = 0;
 }
 
-DiscountCard::DiscountCard(String discountCardHolderName, unsigned int discountCardID)
-	: discountCardHolderName(discountCardHolderName), discountCardID(discountCardID)
+DiscountCard::DiscountCard(String discountCardHolderName): discountCardHolderName(discountCardHolderName)
 {
-	numberOfCardsCreated = 0;
+	discountCardID = nextCardID++;
 }
 
-bool DiscountCard::validateCard(unsigned int possibleCardID) const
+void DiscountCard::setDiscountCardHolderName(const String& name)
 {
-	if (possibleCardID > 999999 || possibleCardID < 100000) return false;
+	discountCardHolderName = name;
+}
 
-	String fileName = generateFileName();
-	std::ifstream ifs(fileName.c_str(), std::ios::binary);
+void DiscountCard::setDiscountCardID(unsigned int id)
+{
+	discountCardID = id;
+}
 
-	ifs.read((char*)&this->numberOfCardsCreated, sizeof(this->numberOfCardsCreated));
+unsigned int DiscountCard::getDiscountCardID() const
+{
+	return discountCardID;
+}
 
-	for (size_t i = 0;i < this->numberOfCardsCreated;i++) {
-		unsigned int fromFileID;
-		ifs.read((char*)&fromFileID, sizeof(fromFileID));
-
-		if (fromFileID == possibleCardID) {
-			ifs.close();
-			return true;
-		}
-
-		ifs.close();
-		return false;
-	}
+void DiscountCard::setNextID(unsigned int id)
+{
+	nextCardID = id;
 }

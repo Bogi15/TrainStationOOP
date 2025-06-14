@@ -1,4 +1,12 @@
 #include "Utility.h"
+#include <sstream>
+#include <iomanip>
+#include <ctime>
+
+#include "DiscountCard.h"
+#include "DiscountCardAge.h"
+#include "DiscountCardDistance.h"
+#include "DiscountCardRoute.h"
 
 void Utility::fillWithDashSign(size_t len)
 {
@@ -33,6 +41,15 @@ String Utility::fillWithSpaces(size_t len) const
 size_t Utility::calculateFilling(const String& str) const
 {
     return ConstantsU::MAX_LINE_LEN - str.getSize();
+}
+
+void Utility::failMessage()
+{
+    if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        throw std::invalid_argument("wrong type of data given");
+    }
 }
 
 std::tm Utility::parseDateTime(const String& s)
@@ -84,6 +101,48 @@ BaseVagon* Utility::readFromStream(std::ifstream& ifs)
 
 }
 
+BaseVagon* Utility::createWithString(const String& s)
+{
+    if (s == "first-class") {
+        unsigned int basePrice;
+        std::cin >> basePrice;
+        failMessage();
+
+        double comfortFactor;
+        std::cin >> comfortFactor;
+        failMessage();
+       
+        if (comfortFactor < 0 || comfortFactor > 1) throw std::invalid_argument("The comfort factor is between 0 and 1!");
+
+        return new FirstClassVagon(basePrice, comfortFactor);
+
+    }
+    else if (s == "second-class") {
+        unsigned int basePrice;
+        std::cin >> basePrice;
+        failMessage();
+
+        unsigned int kgPrice;
+        std::cin >> kgPrice;
+        failMessage();
+
+        return new SecondClassVagon(basePrice,kgPrice);
+    }
+    else if (s == "sleeping-wagon") {
+        unsigned int basePrice;
+        std::cin >> basePrice;
+        failMessage();
+
+        unsigned int hunderedKilimetersPrice;
+        std::cin >> hunderedKilimetersPrice;
+        failMessage();
+
+        return new SleepingVagon(basePrice,hunderedKilimetersPrice);
+    }  
+    else
+        return nullptr;
+}
+
 bool Utility::isValidDate(const String& date)
 {
     if (date.getSize() != 10 || date[2] != '/' || date[5] != '/')
@@ -128,7 +187,45 @@ bool Utility::isValidHour(const String& time)
 
 bool Utility::isTimeToFree(const String& t)
 {
+    std::tm tm{};
+    std::istringstream ss(t.c_str());
+    ss >> std::get_time(&tm, "%d/%m/%Y %H:%M");
+    if (ss.fail()) {
+        throw std::runtime_error("Failed to parse time string: " + std::string(t.c_str()));
+    }
+    tm.tm_sec = 0;
+    tm.tm_isdst = -1;
 
+    std::time_t given = std::mktime(&tm);
 
-    return false;
+    std::time_t now = std::time(nullptr);
+    constexpr int THIRTY_MINUTES = 30 * 60;
+
+    return now >= (given + THIRTY_MINUTES);
+}
+
+DiscountCard* Utility::createDiscountCard(const String& type)
+{
+    if (type == "route-card")
+        return new DiscountCardRoute();
+    else if (type == "age-card")
+        return new DiscountCardAge();
+    else if (type == "distance-card")
+        return new DiscountCardDistance();
+}
+
+DiscountCard* Utility::createDiscountCardFromFirstChar(const String& type)
+{
+    if (type.findSubStr("RouteCard_"))
+        return new DiscountCardRoute();
+    else if (type.findSubStr("AgeCard_"))
+        return new DiscountCardAge();
+    else if (type.findSubStr("DistanceCard_"))
+        return new DiscountCardDistance();
+    else return nullptr;
+}
+
+void Utility::setlastCardID(unsigned int ID)
+{
+    DiscountCard::setNextID(ID);
 }

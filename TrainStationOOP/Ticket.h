@@ -28,8 +28,8 @@ public:
 		String departingTime,
 		String arrivingTime,
 		size_t departingPlatform,
-		unsigned int discount,
 		unsigned int price,
+		unsigned int discount,
 		String fileName);
 
 	void saveTicketInFile()const;

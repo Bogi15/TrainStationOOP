@@ -18,6 +18,9 @@ public:
 
 	void addStation(const Station& s);
 	void addTrain(const SharedPtr<Train>& t, Station& s);
+	void addCardID(unsigned int id);
+
+	bool removeTrain(SharedPtr<Train> t);
 
 	void freeTracks();
 
@@ -39,6 +42,9 @@ public:
 	void setUser(User*& user);
 	bool containsStation(const String& name);
 	bool isValidWagonID(const SharedPtr<Train>& t, unsigned int wagonID);
+	bool isValidCardType(const String& type)const;
+	bool isValidCardID(unsigned int ID)const;
+	bool isValidTicketFile(const String& fileName)const;
 
 	void cinFailMessage()const;
 	void reserveTrackForTrain(Station& s);

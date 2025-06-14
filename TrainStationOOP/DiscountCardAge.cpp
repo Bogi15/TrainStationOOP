@@ -4,13 +4,13 @@
 String DiscountCardAge::generateFileName() const
 {
 	String toReturn = ConstantsDCA::CARD_TYPE + this->discountCardHolderName;
-	return ConstantsDC::PATH_FOR_DISCOUNT_CARDS + toReturn + ConstantsDC::DISCOUNT_CARD_FILE_SUFFIX;
+	return  toReturn + ConstantsDC::DISCOUNT_CARD_FILE_SUFFIX;
 }
 
 DiscountCardAge::DiscountCardAge() : DiscountCard(), age(0){}
 
-DiscountCardAge::DiscountCardAge(String discountCardHolderName, unsigned int discountCardID, unsigned int age)
-	: DiscountCard(discountCardHolderName,discountCardID), age(age){}
+DiscountCardAge::DiscountCardAge(String discountCardHolderName, unsigned int age)
+	: DiscountCard(discountCardHolderName), age(age){}
 
 unsigned int DiscountCardAge::getPercentigeDiscount() const
 {
@@ -97,4 +97,39 @@ void DiscountCardAge::printDiscountCard() const
 	std::cout << '|' << age << myUtility.fillWithSpaces(myUtility.calculateFilling(age)) << "|\n";
 	std::cout << '|' << Id << myUtility.fillWithSpaces(myUtility.calculateFilling(Id)) << "|\n";
 	std::cout << '|' << myUtility.fillWithSign(ConstantsU::MAX_LINE_LEN) << myUtility.fillWithSign(ConstantsU::MAX_LINE_LEN) << "|\n";
+}
+
+void DiscountCardAge::getInfoForCard()
+{
+	String userName;
+	std::cin >> userName;
+	DiscountCard::setDiscountCardHolderName(userName);
+
+	unsigned int age;
+	std::cin >> age;
+	if (std::cin.fail()) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		throw std::invalid_argument("wrong type of data given");
+	}
+	
+	setAge(age);
+	
+	setDiscountCardID(nextCardID++);
+}
+
+void DiscountCardAge::setAge(unsigned int age)
+{
+	this->age = age;
+}
+
+void DiscountCardAge::printFileName() const
+{
+	std::cout << generateFileName();
+}
+
+void DiscountCardAge::applyDiscount(const SharedPtr<Train>& t, unsigned int& price, unsigned int& discount) const
+{
+	discount = (getPercentigeDiscount() * price)/100;
+	price = price - discount;
 }

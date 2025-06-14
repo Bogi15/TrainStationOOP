@@ -1,17 +1,18 @@
 #include "DiscountCardRoute.h"
+#include "Train.h"
 
 String DiscountCardRoute::generateFileName() const
 {
 	String toReturn = ConstantsDCR::CARD_TYPE + this->discountCardHolderName;
-	return ConstantsDC::PATH_FOR_DISCOUNT_CARDS + toReturn + ConstantsDC::DISCOUNT_CARD_FILE_SUFFIX;
+	return toReturn + ConstantsDC::DISCOUNT_CARD_FILE_SUFFIX;
 }
 
-DiscountCardRoute::DiscountCardRoute(String discountCardHolderName, unsigned int discountCardID, String destionation)
-		:DiscountCard(discountCardHolderName,discountCardID), destination(destionation){}
+DiscountCardRoute::DiscountCardRoute(String discountCardHolderName, String destionation)
+		:DiscountCard(discountCardHolderName), destination(destionation){}
 
 unsigned int DiscountCardRoute::getPercentigeDiscount() const
 {
-	return destination == trainDestination ? 100 : 0;
+	return 0;
 }
 
 void DiscountCardRoute::saveDiscountCardToFile() const
@@ -89,7 +90,34 @@ void DiscountCardRoute::printDiscountCard() const
 
 }
 
-void DiscountCardRoute::setTrainDestination(const String& trainDestination)
+void DiscountCardRoute::setDestination(const String& destination)
 {
-	this->trainDestination = trainDestination;
+	this->destination = destination;
+}
+
+
+void DiscountCardRoute::getInfoForCard()
+{
+	String userName;
+	std::cin >> userName;
+	DiscountCard::setDiscountCardHolderName(userName);
+
+	String destination;
+	std::cin >> destination;
+	setDestination(destination);
+
+	setDiscountCardID(nextCardID++);
+}
+
+void DiscountCardRoute::printFileName() const
+{
+	std::cout << generateFileName();
+}
+
+void DiscountCardRoute::applyDiscount(const SharedPtr<Train>& t, unsigned int& price, unsigned int& discount) const
+{
+	if (destination == t->getFinalStation()) {
+		discount = price;
+		price = 0;
+	}
 }

@@ -182,6 +182,11 @@ const Vector<BaseVagon*>& Train::getVagons() const
 	return vagons;
 }
 
+Vector<BaseVagon*>& Train::getVagons()
+{
+	return vagons;
+}
+
 unsigned int Train::getNextID()
 {
 	return nextID;
@@ -242,10 +247,12 @@ void Train::setVagons(const Vector<BaseVagon*>& vs)
 	vagons = vs;
 }
 
-void Train::addVagon(const BaseVagon& vagon)
+void Train::addVagon(BaseVagon*& vagon)
 {
-	BaseVagon* cloneVagon = vagon.clone();
-	vagons.push_back(cloneVagon);
+	unsigned int id = ++nextVagonID;
+	vagon->setWagonID(id);
+	vagons.push_back(vagon);
+
 }
 
 void Train::removeVagon(unsigned int vagonID)
@@ -303,6 +310,10 @@ const BaseVagon* Train::getVagonByID(unsigned int vagonID) const
 
 BaseVagon*& Train::getVagonByID(unsigned int vagonID)
 {
+	if (vagonID > nextVagonID || vagonID <= 0) {
+		throw std::invalid_argument("Wagon with such ID does not exist!");
+	}
+
 	return vagons[vagonID - 1];
 }
 
@@ -317,6 +328,7 @@ void Train::writeTrainBinary(std::ofstream& ofs) const
 	ofs.write((const char*)&distance, sizeof(unsigned int));
 	ofs.write((const char*)&ID, sizeof(unsigned int));
 	ofs.write((const char*)&speed, sizeof(unsigned int));
+	ofs.write((const char*)&nextVagonID, sizeof(unsigned int));
 
 	size_t count = vagons.getSize();
 	ofs.write((const char*)&count, sizeof(size_t));
@@ -340,6 +352,7 @@ void Train::readTrainBinary(std::ifstream& ifs)
 	ifs.read((char*)&distance, sizeof(unsigned int));
 	ifs.read((char*)&ID, sizeof(unsigned int));
 	ifs.read((char*)&speed, sizeof(unsigned int));
+	ifs.read((char*)&nextVagonID, sizeof(unsigned int));
 
 	size_t count = 0;;
 	ifs.read((char*)&count, sizeof(count));

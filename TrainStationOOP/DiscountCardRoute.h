@@ -9,20 +9,24 @@ class DiscountCardRoute : public DiscountCard
 {
 protected:
 	String destination;
-	String trainDestination;
 
 	String generateFileName() const;
 
 public:
 
-	DiscountCardRoute(String discountCardHolderName, unsigned int discountCardID, String destionation);
+	DiscountCardRoute() = default;
+	DiscountCardRoute(String discountCardHolderName, String destionation);
 	unsigned int getPercentigeDiscount() const override;
 
 	void saveDiscountCardToFile() const override;
 	void loadDiscountCardFromFile(const String& fileName)override;
 	void printDiscountCard() const override;
 
-	void setTrainDestination(const String& trainDestination);
+	void setDestination(const String& destination);
+
+	void getInfoForCard()override;
+	void printFileName()const override;
+	void applyDiscount(const SharedPtr<Train>& t, unsigned int& price, unsigned int& discount)const override;
 
 };
 

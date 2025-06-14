@@ -13,36 +13,36 @@
 #include "App.h"
 
 int main() {
-	FirstClassVagon a(20,0.9);
-	SecondClassVagon b(20, 10);
-	SleepingVagon c(20,15);
-	a.printUnoccupiedSeats();
-	std::cout << a.getWagonID() << std::endl;
-	b.printUnoccupiedSeats();
-	std::cout << b.getWagonID() << std::endl;
-	c.printUnoccupiedSeats();
-	std::cout << c.getWagonID() << std::endl;
+	//FirstClassVagon a(20,0.9);
+	//SecondClassVagon b(20, 10);
+	//SleepingVagon c(20,15);
+	//a.printUnoccupiedSeats();
+	//std::cout << a.getWagonID() << std::endl;
+	//b.printUnoccupiedSeats();
+	//std::cout << b.getWagonID() << std::endl;
+	//c.printUnoccupiedSeats();
+	//std::cout << c.getWagonID() << std::endl;
 
-	String name = "Ivan_Petrov";
-	DiscountCardAge d(name, 222222, 15);
-	d.saveDiscountCardToFile();
-	String name2 = "petar";
-	DiscountCardAge e(name2, 111111, 12);
-	String file = "discountCards\\AgeCard_Ivan_Petrov_Card.txt";
-	e.loadDiscountCardFromFile(file);
-	
+	//String name = "Ivan_Petrov";
+	//DiscountCardAge d(name, 222222, 15);
+	//d.saveDiscountCardToFile();
+	//String name2 = "petar";
+	//DiscountCardAge e(name2, 111111, 12);
+	//String file = "discountCards\\AgeCard_Ivan_Petrov_Card.txt";
+	//e.loadDiscountCardFromFile(file);
+	//
 
-	DiscountCardDistance f("Georgi_Pavlov", 333333, 300);
-	f.saveDiscountCardToFile();
+	//DiscountCardDistance f("Georgi_Pavlov", 333333, 300);
+	//f.saveDiscountCardToFile();
 
-	DiscountCardDistance g(name, 111111, 10);
-	g.loadDiscountCardFromFile("discountCards\\DistanceCard_Georgi_Pavlov_Card.txt");
+	//DiscountCardDistance g(name, 111111, 10);
+	//g.loadDiscountCardFromFile("discountCards\\DistanceCard_Georgi_Pavlov_Card.txt");
 
-	DiscountCardRoute h("Boriskata",  555555 , "Velikoto_tarnovo");
-	h.saveDiscountCardToFile();
-	DiscountCardRoute l("h", 999999, "a");
-	l.loadDiscountCardFromFile("discountCards\\RouteCard_Boriskata_Card.txt");
-	l.printDiscountCard();
+	//DiscountCardRoute h("Boriskata", "Velikoto_tarnovo");
+	//h.saveDiscountCardToFile();
+	//DiscountCardRoute l("h", "a");
+	//l.loadDiscountCardFromFile("discountCards\\RouteCard_Boriskata_Card.txt");
+	//l.printDiscountCard();
 
 	//Train t("Sofia", "Varna", 300, 150, "08/06/2025 17:30");
 	//t.addVagon(a);
@@ -59,11 +59,11 @@ int main() {
 	////t.getSeat(3, 3);
 	//t.printVagons();
 
-	String aa = "Sofia";
-	String ab = "Varna";
+	//String aa = "Sofia";
+	//String ab = "Varna";
 
-	Ticket Edin(aa, ab, 2001, 1, 9, "11/06/2025 08:00", "11/06/2025 12:00", 1, 50, 0,"ticket1.txt");
-	Edin.saveTicketInFile();
+	//Ticket Edin(aa, ab, 2001, 1, 9, "11/06/2025 08:00", "11/06/2025 12:00", 1, 50, 0,"ticket1.txt");
+	//Edin.saveTicketInFile();
 
 	//t.printTrain();
 	//Train t1 = t;

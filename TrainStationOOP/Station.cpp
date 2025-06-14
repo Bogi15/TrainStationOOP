@@ -171,6 +171,27 @@ void Station::addArrivingTrain(const SharedPtr<Train>& train)
 	arrivingTrains.push_back(WeakPtr<Train>(train));
 }
 
+void Station::removeDepartingTrain(unsigned int trainID)
+{
+	for (size_t i = 0;i < departingTrains.getSize();i++) {
+		if (departingTrains[i]->getID() == trainID) {
+			departingTrains.remove(i);
+			return;
+		}
+	}
+}
+
+void Station::removeArrivingTrain(unsigned int trainID)
+{
+	for (size_t i = 0;i < arrivingTrains.getSize();i++) {
+		SharedPtr<Train> sptr = arrivingTrains[i].lock();
+		if (sptr->getID() == trainID) {
+			arrivingTrains.remove(i);
+			return;
+		}
+	}
+}
+
 const bool* Station::getTracks() const
 {
 	return tracks;

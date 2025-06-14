@@ -1,10 +1,10 @@
 |===========Train Ticket===========|
 |Train ID: 1000                    |
 |Vagon ID: 1                       |
-|Seat ID: 1                        |
+|Seat ID: 7                        |
 |Departure time: 14/06/2025 18:00  |
 |Arrival time: 14/06/2025 22:00    |
 |Departure platform: 0             |
-|Discount: 0 lv.                   |
-|Price: 50 lv.                     |
+|Discount: 10 lv.                  |
+|Price: 40 lv.                     |
 |==================================|

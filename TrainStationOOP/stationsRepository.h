@@ -5,6 +5,8 @@ namespace namesOfFiles {
 	constexpr const char* allAdminsFile = "admins.bin";
 	constexpr const char* allStationsFile = "stations.bin";
 	constexpr const char* allTrainsFile = "trains.bin";
+	constexpr const char* allIDcardsFile = "cardsID.bin";
+
 
 }
 
@@ -16,6 +18,7 @@ private:
 	static Vector<Station> allStations;
 	static Vector<SharedPtr<Train>> allTrains;
 	Vector<User*> admins;
+	Vector<unsigned int> discountCardIDs;
 
 public:
 
@@ -29,11 +32,16 @@ public:
 	Vector<User*>& getAllAdmins();
 	const Vector<User*>& getAllAdmins()const;
 
+	const Vector<unsigned int> getAllDiscountCardIDs()const;
+
 	const Station& getStationByName(const String& name) const;
 	Station& getStationByName(const String& name);
 
 	void addTrain(const SharedPtr<Train>& t);
 	void addStation(const Station& s);
+	void addCardID(unsigned int id);
+
+	bool removeTrain(SharedPtr<Train> t);
 
 	void saveAllStationsInFile()const;
 	void loadAllStationsFromFile();
@@ -43,6 +51,9 @@ public:
 
 	void saveAllAdminsInFile()const;
 	void loadAllAdminsFromFile();
+
+	void saveAllCardsIDs()const;
+	void loadAllCardsIDs();
 
 	void clearAllStaions();
 	void clearAllTrains();

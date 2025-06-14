@@ -4,7 +4,7 @@
 
 void addTrainCommand::execute() const
 {
-
+	manager->freeTracks();
 
 	if (!manager->getUser()) throw std::logic_error("You need to be a logged as admin to use this command!");
 

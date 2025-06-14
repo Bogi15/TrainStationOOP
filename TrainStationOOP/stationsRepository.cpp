@@ -1,5 +1,6 @@
 #include "stationsRepository.h"
 #include "Admin.h"
+#include "Utility.h"
 
 Vector<Station> stationsRepository::allStations{};
 Vector<SharedPtr<Train>> stationsRepository::allTrains{};
@@ -44,6 +45,11 @@ const Vector<User*>& stationsRepository::getAllAdmins() const
     return admins;
 }
 
+const Vector<unsigned int> stationsRepository::getAllDiscountCardIDs() const
+{
+    return discountCardIDs;
+}
+
 const Station& stationsRepository::getStationByName(const String& name) const
 {
     for (size_t i = 0;i < allStations.getSize();i++) {
@@ -71,6 +77,23 @@ void stationsRepository::addTrain(const SharedPtr<Train>& t)
 void stationsRepository::addStation(const Station& s)
 {
     allStations.push_back(s);
+}
+
+void stationsRepository::addCardID(unsigned int id)
+{
+    discountCardIDs.push_back(id);
+}
+
+bool stationsRepository::removeTrain(SharedPtr<Train> t)
+{
+    for (size_t i = 0;i < allTrains.getSize();i++) {
+        if (allTrains[i]->getID() == t->getID()) {
+            allTrains.remove(i);
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void stationsRepository::saveAllStationsInFile() const
@@ -169,6 +192,43 @@ void stationsRepository::loadAllAdminsFromFile()
         fromFile->readBinary(ifs);
         admins.push_back(fromFile);
     }
+}
+
+void stationsRepository::saveAllCardsIDs() const
+{
+    std::ofstream ofs(namesOfFiles::allIDcardsFile, std::ios::binary);
+
+    size_t numberOfCards = discountCardIDs.getSize();
+    ofs.write((const char*)&numberOfCards, sizeof(size_t));
+
+    for (size_t i = 0;i < numberOfCards;i++) {
+        unsigned int id = discountCardIDs[i];
+        ofs.write((const char*)&id, sizeof(unsigned int));
+    }
+}
+
+void stationsRepository::loadAllCardsIDs()
+{
+    std::ifstream ifs(namesOfFiles::allIDcardsFile, std::ios::binary);
+
+    size_t numberOfCards = 0;
+    ifs.read((char*)&numberOfCards, sizeof(size_t));
+
+    discountCardIDs.clear();
+
+    for (size_t i = 0;i < numberOfCards;i++) {
+        unsigned int id;
+        ifs.read((char*)&id, sizeof(unsigned int));
+        discountCardIDs.push_back(id);
+    }
+
+    if (!numberOfCards) Utility::setlastCardID(100000);
+    else
+    {
+        unsigned int lastID = getAllDiscountCardIDs()[numberOfCards - 1] + 1;
+        Utility::setlastCardID(lastID);
+    }
+
 }
 
 void stationsRepository::clearAllStaions()

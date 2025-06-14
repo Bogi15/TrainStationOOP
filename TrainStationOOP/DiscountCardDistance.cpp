@@ -1,13 +1,14 @@
 #include "DiscountCardDistance.h"
+#include "Train.h"
 
 String DiscountCardDistance::generateFileName() const
 {
 	String toReturn = ConstantsDCD::CARD_TYPE + this->discountCardHolderName;
-	return ConstantsDC::PATH_FOR_DISCOUNT_CARDS + toReturn + ConstantsDC::DISCOUNT_CARD_FILE_SUFFIX;
+	return toReturn + ConstantsDC::DISCOUNT_CARD_FILE_SUFFIX;
 }
 
-DiscountCardDistance::DiscountCardDistance(String discountCardHolderName, unsigned int discountCardID, unsigned int distance)
-	: DiscountCard(discountCardHolderName,discountCardID), distance(distance){}
+DiscountCardDistance::DiscountCardDistance(String discountCardHolderName, unsigned int distance)
+	: DiscountCard(discountCardHolderName), distance(distance){}
 
 unsigned int DiscountCardDistance::getPercentigeDiscount() const
 {
@@ -95,4 +96,46 @@ void DiscountCardDistance::printDiscountCard() const
 void DiscountCardDistance::setTraintDistance(unsigned int trainDistance)
 {
 	this->trainDistance = trainDistance;
+}
+
+void DiscountCardDistance::getInfoForCard()
+{
+
+	String userName;
+	std::cin >> userName;
+	DiscountCard::setDiscountCardHolderName(userName);
+
+	unsigned int distance;
+	std::cin >> distance;
+	if (std::cin.fail()) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		throw std::invalid_argument("wrong type of data given");
+	}
+
+	setDistance(distance);
+
+	setDiscountCardID(nextCardID++);
+}
+
+void DiscountCardDistance::setDistance(unsigned int distance)
+{
+	this->distance = distance;
+}
+
+void DiscountCardDistance::printFileName() const
+{
+	std::cout << generateFileName();
+}
+
+void DiscountCardDistance::applyDiscount(const SharedPtr<Train>& t,unsigned int& price, unsigned int& discount) const
+{
+	if (t->getDistance() <= distance) {
+		discount = price * 0.5;
+		price = price - discount;
+	}
+	else {
+		discount = price * 0.3;
+		price = price - discount;
+	}
 }

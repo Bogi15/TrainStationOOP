@@ -36,9 +36,9 @@ String::String(unsigned int data)
 	this->data[len] = '\0';
 }
 
-String::String(size_t newSize) : size(newSize)
+String::String(size_t newSize) : size(0)
 {
-	this->capacity = allocateCapacity(this->size);
+	this->capacity = allocateCapacity(newSize);
 	this->data = new char[this->capacity] { '\0' };
 }
 
@@ -236,6 +236,29 @@ void String::readBinary(std::ifstream& ifs)
 
 	this->data[newSize] = '\0';
 	this->size = newSize;
+}
+
+bool String::findSubStr(const String& s) const
+{
+	size_t n = this->size;
+	size_t m = s.getSize();
+
+	if (m == 0) return true;
+	if (m > n) return false;
+	
+
+	for (size_t i = 0;i + m <= n;i++) {
+		bool match = true;
+		for (size_t j = 0;j < m;j++) {
+			if (data[i + j] != s.data[j]) {
+				match = false;
+				continue;
+			}
+		}
+		if (match) return true;
+	}
+
+	return false;
 }
 
 String::~String()

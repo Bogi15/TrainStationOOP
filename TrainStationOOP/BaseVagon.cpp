@@ -5,7 +5,7 @@
 #include <exception>
 
 
-unsigned int BaseVagon::nextID = 1;
+//unsigned int BaseVagon::nextID = 1;
 
 void BaseVagon::free()
 {
@@ -39,7 +39,7 @@ void BaseVagon::moveFrom(BaseVagon&& other) noexcept
 {
 	this->seatRows = other.seatRows;
 	this->seatCols = other.seatCols;
-	this->ID = BaseVagon::nextID++;
+	//this->ID = BaseVagon::nextID++;
 	this->basePrice = other.basePrice;
 
 
@@ -61,7 +61,6 @@ BaseVagon::BaseVagon(unsigned int basePrice, size_t rows, size_t cols)
 	this->basePrice = basePrice;
 	this->seatRows = rows;
 	this->seatCols = cols;
-	this->ID = nextID++;
 
 	seats = new bool* [this->seatRows];
 	for (size_t i = 0;i < this->seatRows;i++) {
@@ -196,6 +195,6 @@ void BaseVagon::setWagonID(unsigned int wagonID)
 
 void BaseVagon::setNextID(unsigned int lastWagonID)
 {
-	this->nextID = lastWagonID;
+	//this->nextID = lastWagonID;
 }
 

@@ -74,6 +74,24 @@ void SleepingVagon::setSeats(const bool** seats)
 	}
 }
 
+bool SleepingVagon::isFree(size_t seat) const
+{
+	if (seat == 0 || seat > tempConstants::NUMBER_OF_COLS * tempConstants::NUMBER_OF_ROWS) {
+		throw std::out_of_range("Invalid seat number");
+	}
+
+	seat--;
+
+	size_t row = seat / tempConstants::NUMBER_OF_COLS;
+	size_t col = seat % tempConstants::NUMBER_OF_COLS;
+
+	if (BaseVagon::getIsTaken(row, col)) {
+		throw std::runtime_error("The seat is taken");
+	}
+
+	return true;
+}
+
 VagonType SleepingVagon::typeVagon() const
 {
 	return VagonType::sleeping;

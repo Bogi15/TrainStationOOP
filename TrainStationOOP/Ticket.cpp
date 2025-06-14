@@ -9,8 +9,8 @@ Ticket::Ticket(String departingStation,
 			   String departingTime,
 			   String arrivingTime,
 			   size_t departingPlatform,
-			   unsigned int discount,
 			   unsigned int price,
+			   unsigned int discount,
 			   String fileName)
 	: departingStation(departingStation),
 	  arrivingStation(arrivingStation),
@@ -30,6 +30,10 @@ void Ticket::saveTicketInFile() const
 	std::ofstream ofs(fileName.c_str());
 
 	String headline = "Train Ticket";
+	String ticket = "Ticket: ";
+	ticket += departingStation;
+	ticket += " - ";
+	ticket += arrivingStation;
 	String trainIDS = "Train ID: ";
 	String IDT(trainID);
 	trainIDS += IDT;
@@ -57,6 +61,7 @@ void Ticket::saveTicketInFile() const
 	priceS += lv;
 
 	ofs << '|' << myUtility.fillWithSign(myUtility.calculateFilling(headline)) << headline << myUtility.fillWithSign(myUtility.calculateFilling(headline)) << "|\n";
+	ofs << '|' << ticket << myUtility.fillWithSpaces(myUtility.calculateFilling(ticket)) << "|\n";
 	ofs << '|' << trainIDS << myUtility.fillWithSpaces(myUtility.calculateFilling(trainIDS)) << "|\n";
 	ofs << '|' << VagonIDS << myUtility.fillWithSpaces(myUtility.calculateFilling(VagonIDS)) << "|\n";
 	ofs << '|' << SeatIDS << myUtility.fillWithSpaces(myUtility.calculateFilling(SeatIDS)) << "|\n";
