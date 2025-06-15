@@ -41,7 +41,7 @@ void Station::printArrivaingTrains() const
 
 		std::cout << "| ";
 		std::cout << temp->getArrivalTime() << "  | ";
-		std::cout << temp->getArrivalTrack() << "                | ";
+		std::cout << temp->getArrivalTrack()  + 1 << "                | ";
 		std::cout << temp->getID() << "     | ";
 		std::cout << temp->getStartingStation();
 		printBlankSpaces(temp->getStartingStation(),ConstantsS::MAX_STARTING_STATION_LEN);
@@ -70,7 +70,7 @@ void Station::printDepartingTrains() const
 		std::cout << departingTrains[i]->getFinalStation();
 		printBlankSpaces(departingTrains[i]->getFinalStation(),ConstantsS::MAX_STATION_NAME_SPACE);
 		std::cout << " | ";
-		std::cout << departingTrains[i]->getDepartureTrack() << "                  | ";
+		std::cout << departingTrains[i]->getDepartureTrack() + 1<< "                  | ";
 		std::cout << departingTrains[i]->getID() << "     | ";
 		std::cout << trainStatusDeparting(departingTrains[i]->getDepartureTime());
 		if (trainStatusDeparting(departingTrains[i]->getDepartureTime()) == "To depart") std::cout << " |";
@@ -103,7 +103,7 @@ void Station::printTrainsByDestination(const String& destination) const
 			std::cout << departingTrains[i]->getFinalStation();
 			printBlankSpaces(departingTrains[i]->getFinalStation(), ConstantsS::MAX_STATION_NAME_SPACE);
 			std::cout << " | ";
-			std::cout << departingTrains[i]->getDepartureTrack() << "                  | ";
+			std::cout << departingTrains[i]->getDepartureTrack() + 1<< "                  | ";
 			std::cout << departingTrains[i]->getID() << "     | ";
 			std::cout << trainStatusDeparting(departingTrains[i]->getDepartureTime());
 			if (trainStatusDeparting(departingTrains[i]->getDepartureTime()) == "To depart") std::cout << " |";
@@ -137,7 +137,7 @@ void Station::printTrainsByTime(const String& date, const String& time) const
 			std::cout << departingTrains[i]->getFinalStation();
 			printBlankSpaces(departingTrains[i]->getFinalStation(), ConstantsS::MAX_STATION_NAME_SPACE);
 			std::cout << " | ";
-			std::cout << departingTrains[i]->getDepartureTrack() << "                  | ";
+			std::cout << departingTrains[i]->getDepartureTrack() + 1<< "                  | ";
 			std::cout << departingTrains[i]->getID() << "     | ";
 			std::cout << trainStatusDeparting(departingTrains[i]->getDepartureTime());
 			if (trainStatusDeparting(departingTrains[i]->getDepartureTime()) == "To depart") std::cout << " |";

@@ -274,7 +274,7 @@ void Train::printTrain() const
 	std::cout << "Speed: " << speed << "km/h" << std::endl;
 	std::cout << "Departure Time: " << departureTime << std::endl;
 	std::cout << "Arrival Time: " << arrivalTime << std::endl;
-	std::cout << "Departure Platform: " << departureTrack << std::endl;
+	std::cout << "Departure Platform: " << departureTrack + 1 << std::endl;
 	std::cout << std::endl;
 	std::cout << "Wagons:" << std::endl;
 	for (size_t i = 0;i < vagons.getSize();i++) {

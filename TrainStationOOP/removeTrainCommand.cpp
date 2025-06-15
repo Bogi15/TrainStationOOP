@@ -13,6 +13,12 @@ void removeTrainCommand::execute() const
 
 	if (!manager->removeTrain(t)) throw std::runtime_error("Failed to remove train from system.");
 
+	Station& departS = manager->getStationByName(t->getStartingStation());
+	departS.releaseTrack(t->getDepartureTrack());
+
+	Station& arriveS = manager->getStationByName(t->getFinalStation());
+	arriveS.releaseTrack(t->getArrivalTrack());
+
 	for (size_t i = 0;i < manager->getAllStations().getSize();i++) {
 		manager->getAllStations()[i].removeArrivingTrain(trainID);
 		manager->getAllStations()[i].removeDepartingTrain(trainID);

@@ -37,6 +37,9 @@ void addTrainCommand::execute() const
 	Station& departStation = manager->getStationByName(departS);
 	Station& arriveStation = manager->getStationByName(arriveS);
 
+	String dateTime = date + " " + time;
+	if (Utility::hasDeparted(dateTime)) throw std::invalid_argument("Train can't be added in the past!");
+
 	if (!TrackAllocator::allocateTracks(departStation, arriveStation, departingTrack, arrivingTrack)) throw std::logic_error("Could not reserve tracks!");
 
 	SharedPtr<Train> trainPtr(new Train(departS, arriveS, distance, speed, date + " " + time, departingTrack, arrivingTrack));

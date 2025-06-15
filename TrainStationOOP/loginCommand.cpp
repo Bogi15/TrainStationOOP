@@ -15,11 +15,6 @@ void loginCommand::execute() const
 		if (name == a->getName() && a->validatePassword(password)) {
 			manager->setUser(manager->getAllAdmins()[i]);
 			std::cout << "Welcome back, "<< name << "!" << std::endl << std::endl;
-
-			for (size_t i = 0;i < manager->getAllStations().getSize();i++) {
-				manager->getAllStations()[i].printSchedule();
-			}
-
 			return;
 		}
 
