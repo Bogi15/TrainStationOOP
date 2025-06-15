@@ -2,7 +2,7 @@
 
 A command‑line application for managing trains, stations, wagons, tickets, and discount cards, implemented in C++ following SOLID principles and custom container/string utilities.
 
-Features
+## **Features**
 
 Train Management: create, list, print, and remove trains with customizable departure/arrival times, distance, speed, and platforms.
 
@@ -14,7 +14,7 @@ Discount Cards: age‑based, distance‑based, and route‑based cards with poly
 
 Station Scheduling: view arriving/departing trains per station, automatically release platforms 30 minutes after departure/arrival.
 
-Available Commands
+## **Available Commands**
 
 login <user> <password>
 
