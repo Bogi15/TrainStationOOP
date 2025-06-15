@@ -4,7 +4,7 @@ A command‑line application for managing trains, stations, wagons, tickets, and
 
 ## **Features**
 
-Train Management: create, list, print, and remove trains with customizable departure/arrival times, distance, speed, and platforms.
+*Train Management*: create, list, print, and remove trains with customizable departure/arrival times, distance, speed, and platforms.
 
 Wagon Management: add first‑class, second‑class, and sleeping wagons; move wagons between trains; enforce seat occupancy.
 
