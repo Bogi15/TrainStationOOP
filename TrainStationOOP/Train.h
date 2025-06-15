@@ -78,6 +78,7 @@ public:
 	void getSeat(unsigned int vagonID, size_t seat);
 	const BaseVagon* getVagonByID(unsigned int vagonID)const;
 	BaseVagon*& getVagonByID(unsigned int vagonID);
+	BaseVagon* detachWagon(unsigned int wagonID);
 
 	void writeTrainBinary(std::ofstream& ofs) const;
 	void readTrainBinary(std::ifstream& ifs);

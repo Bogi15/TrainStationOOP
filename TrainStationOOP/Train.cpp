@@ -258,7 +258,7 @@ void Train::addVagon(BaseVagon*& vagon)
 void Train::removeVagon(unsigned int vagonID)
 {
 	if (vagonID <= vagons.getSize() + 1) {
-		vagons.remove(vagonID);
+		vagons.remove(vagonID - 1);
 		std::cout << "Successfully removed wagon with ID " << vagonID <<std::endl;
 	}
 
@@ -315,6 +315,19 @@ BaseVagon*& Train::getVagonByID(unsigned int vagonID)
 	}
 
 	return vagons[vagonID - 1];
+}
+
+BaseVagon* Train::detachWagon(unsigned int wagonID)
+{
+	for (size_t i = 0;i < vagons.getSize();i++) {
+		if (vagons[i]->getWagonID() == wagonID) {
+			BaseVagon* ptr = vagons[i];
+			vagons.remove(i);
+			return ptr;
+		}
+	}
+
+	return nullptr;
 }
 
 void Train::writeTrainBinary(std::ofstream& ofs) const
