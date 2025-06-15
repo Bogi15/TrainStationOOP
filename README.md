@@ -1,4 +1,4 @@
-Train Station OOP Console App
+## **Train Station OOP Console App**
 
 A command‑line application for managing trains, stations, wagons, tickets, and discount cards, implemented in C++ following SOLID principles and custom container/string utilities.
 
